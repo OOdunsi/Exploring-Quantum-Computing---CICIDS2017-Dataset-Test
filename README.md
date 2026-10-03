@@ -1,4 +1,4 @@
-# CICIDS2017 Classical Baseline 
+# CICIDS2017 Classical Baseline — Version 2
 
 ## Research context
 
@@ -6,7 +6,7 @@ This repository documents the initial classical-machine-learning phase of the pr
 
 **Exploring Quantum Computing for Threat Detection and Intelligence on Cloud and On-Premise Infrastructure in Real Time**
 
-The purpose of this first phase is to create a reproducible classical baseline and a controlled, bounded sample that can later support fair quantum-kernel comparisons.
+This repository does **not** claim that the full cloud/on-premise or real-time quantum portion of the endeavor has already been implemented. The purpose of this first phase is to create a reproducible classical baseline and a controlled, bounded sample that can later support fair quantum-kernel comparisons.
 
 ## Dataset choice
 
@@ -42,6 +42,7 @@ Future quantum-comparison subset:
 - 150 validation rows
 - 150 held-out test rows
 
+These are starter values, not fixed scientific requirements. The exact quantum sample size should be justified by pilot measurements of memory, execution time, and simulator feasibility.
 
 ## Repository structure
 
@@ -60,4 +61,6 @@ cicids2017-classical-baseline-v2/
     └── .gitkeep
 ```
 
+## Research-integrity statement
 
+Planned work is labeled as planned. Results should not be represented as completed until the notebook has actually been executed, reviewed, and committed with the resulting outputs. No quantum advantage, live real-time quantum inference, or production cloud/on-premise deployment is claimed in this baseline phase.
