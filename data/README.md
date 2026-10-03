@@ -2,9 +2,9 @@
 
 ## Dataset Used
 
-This project uses the **improved/corrected CIC-IDS2017 dataset** for the initial network-intrusion classification experiments.
+This project uses the improved/corrected CIC-IDS2017 dataset for the initial network-intrusion classification experiments.
 
-The original CICIDS2017 dataset was developed by the **Canadian Institute for Cybersecurity (CIC) at the University of New Brunswick (UNB)** as a benchmark dataset for intrusion-detection research. It contains labeled benign and malicious network traffic and has been widely used for machine-learning-based cybersecurity research.
+The original CICIDS2017 dataset was developed by the Canadian Institute for Cybersecurity (CIC) at the University of New Brunswick (UNB) as a benchmark dataset for intrusion-detection research. It contains labeled benign and malicious network traffic and has been widely used for machine-learning-based cybersecurity research.
 
 For this project, I intend to use the **improved CIC-IDS2017 release** distributed by the DistriNet Research Group in connection with subsequent peer-reviewed research examining labeling, flow-construction, and feature-extraction issues in the original dataset.
 
