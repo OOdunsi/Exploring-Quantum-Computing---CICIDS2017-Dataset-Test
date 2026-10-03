@@ -200,7 +200,8 @@ Completed foundational activities include:
 - creation of the experimental methodology;
 - establishment of the research-progress log; and
 - definition of the staged experimental sequence.
+- Validated local improved CICIDS2017 files and generated file-level SHA-256 provenance records.
 
-The next implementation milestone is the **validation and preprocessing of the improved/corrected CIC-IDS2017 dataset**, followed by execution of the first classical Support Vector Machine and Random Forest baseline experiments.
+The next implementation milestone is preprocessing of the improved/corrected CIC-IDS2017 dataset, followed by execution of the first classical Support Vector Machine and Random Forest baseline experiments.
 
 No quantum-computing experimental result is claimed at this stage.
