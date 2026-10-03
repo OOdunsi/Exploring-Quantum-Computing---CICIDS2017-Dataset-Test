@@ -1,4 +1,4 @@
-# CICIDS2017 Classical Baseline — Version 2
+# CICIDS2017 Classical Baseline 
 
 ## Research context
 
@@ -46,7 +46,6 @@ These are starter values, not fixed scientific requirements. The exact quantum s
 
 ## Repository structure
 
-```text
 cicids2017-classical-baseline-v2/
 ├── README.md
 ├── requirements.txt
