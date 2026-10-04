@@ -35,14 +35,13 @@ The raw dataset is intentionally **not** included in this repository.
 
 ## Default starter sizes
 
-Classical working set: up to 300,000 rows by default; set `CLASSICAL_MAX_ROWS = None` to use the full cleaned dataset.
-
+Classical working sample: 300,000 rows by default for reproducible baseline development; the configuration can be set to use the full cleaned dataset when computational resources permit.
 Future quantum-comparison subset:
 - 700 training rows
 - 150 validation rows
 - 150 held-out test rows
 
-These are starter values, not fixed scientific requirements. The exact quantum sample size should be justified by pilot measurements of memory, execution time, and simulator feasibility.
+(These are starter values, not fixed scientific requirements. The exact quantum sample size should be justified by pilot measurements of memory, execution time, and simulator feasibility.)
 
 ## Repository structure
 
