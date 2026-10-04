@@ -9,7 +9,7 @@
 
 I commenced the implementation phase of the proposed research on October 3, 2026, by establishing a version-controlled GitHub research repository for the initial classical machine-learning baseline.
 
-The initial experimental stage uses the improved/corrected CIC-IDS2017 intrusion-detection dataset. This stage is intended to establish reproducible classical reference models before subsequent bounded quantum-machine-learning experiments are attempted.
+The initial experimental stage uses the improved/corrected CICIDS2017 intrusion-detection dataset. This stage is intended to establish reproducible classical reference models before subsequent bounded quantum-machine-learning experiments are attempted.
 
 Initial implementation activities include:
 
@@ -278,34 +278,217 @@ Generated artifact:
 
 **Status**: Completed.
 
+October 3, 2026 — Source-File and Unseen-Attack-Family Sensitivity Analysis
+
+Conducted a leave-one-source-file-out sensitivity analysis using only the combined training and validation development data. The held-out 45,000-observation test partition remained untouched.
+
+For each experiment, observations from one CIC-IDS2017 source file were excluded from model training and used as the evaluation set. New Linear Support Vector Machine and Random Forest models were trained using the remaining source files.
+
+The purpose of this analysis was to assess whether the strong performance observed under random stratified validation persisted when an entire collection source was absent from model training.
+
+The analysis produced materially different results across source files.
+
+Friday Holdout
+
+When friday.csv was withheld from training:
+- Linear SVM accuracy: 98.60%
+- Linear SVM recall: 99.21%
+- Linear SVM F1 score: 98.51%
+- Random Forest accuracy: 99.23%
+- Random Forest recall: 98.35%
+- Random Forest F1 score: 99.17%
+
+**Both models retained strong malicious-traffic detection performance on the held-out Friday source.**
+
+Monday Holdout
+
+The Monday source contained no successful malicious observations.
+
+When monday.csv was withheld:
+- Linear SVM accuracy: 99.54%
+- Linear SVM false-positive rate: 0.46%
+- Random Forest accuracy: approximately 100.00%
+- Random Forest produced 1 false positive among 44,860 observations.
+
+**Because the Monday evaluation partition contained only benign observations, malicious-class recall, F1 score, and ROC-AUC were not meaningful for this holdout.**
+
+Thursday Holdout
+
+When thursday.csv was withheld:
+- Linear SVM accuracy: 91.20%
+- Linear SVM recall: 57.68%
+- Linear SVM F1 score: 72.11%
+- Random Forest accuracy: 88.19%
+- Random Forest recall: 40.20%
+- Random Forest F1 score: 57.31%
+
+**Both models demonstrated substantial degradation in malicious-traffic recall compared with the random stratified validation results.**
+
+Tuesday Holdout
+
+The Tuesday evaluation partition contained a relatively small malicious-class proportion of approximately 2.22%.
+
+When tuesday.csv was withheld:
+- Linear SVM accuracy: 97.24%
+- Random Forest accuracy: 97.77%
+
+**both models produced 0 true positives;**
+
+**both models therefore had 0% malicious-class recall.**
+
+The relatively high accuracy in this case was driven primarily by the strong class imbalance in the Tuesday source and did not indicate successful malicious-traffic detection.
+
+Wednesday Holdout
+
+When wednesday.csv was withheld:
+- Linear SVM accuracy: 95.21%
+- Linear SVM recall: 86.94%
+- Linear SVM F1 score: 92.60%
+- Random Forest accuracy: 65.56%
+- Random Forest produced 0 true positives and 20,742 false negatives.
+
+The Random Forest nevertheless produced a high ROC-AUC value of approximately 0.9960, indicating that score ranking and default classification-threshold behavior may require further investigation under source-level distribution shift.
+
+## October 3, 2026 — Attack-Family Distribution and Training-Overlap Audit
+
+Following the source-file sensitivity analysis, I examined how successful malicious attack families were distributed across the CIC-IDS2017 source files.
+
+The audit showed that each successful attack family represented in the development data was confined to a single collection source.
+
+Examples included:
+- friday.csv: Botnet, DDoS, and Portscan;
+- tuesday.csv: FTP-Patator and SSH-Patator;
+- wednesday.csv: DoS GoldenEye, DoS Hulk, DoS Slowhttptest, DoS Slowloris, and Heartbleed;
+- thursday.csv: Infiltration, Infiltration - Portscan, Web Attack - Brute Force, Web Attack - SQL Injection, and Web Attack - XSS.
+
+A separate overlap audit confirmed that, for each held-out source file, the associated successful malicious attack families were not present in the remaining training-source files.
+
+Accordingly, the leave-one-source-file-out experiment does not isolate collection-day effects alone. It simultaneously evaluates:
+
+sensitivity to source-file or collection-day distribution shift; and
+
+generalization to attack families absent from the training-source files.
+
+This distinction is important for interpretation. The degraded performance observed on some held-out sources cannot be attributed solely to collection-day effects because source file and attack-family composition are confounded in the dataset.
+
+The Friday results demonstrated that previously unseen attack families can still sometimes be recognized successfully based on malicious characteristics learned from other attack types, whereas Tuesday and Wednesday showed that such generalization was not consistent across attack families.
+
+The current experiment is therefore described as a source-file and unseen-attack-family sensitivity analysis, rather than as evidence of zero-day attack detection.
+
+Generated artifacts:
+- results/source_file_sensitivity_class_audit.csv
+- results/source_file_sensitivity_results.csv
+- results/malicious_attack_family_by_source.csv
+- results/heldout_attack_family_overlap_audit.csv
+
+**Status:** Source-file holdout and attack-family overlap analysis completed; attack-family-level recall analysis and score-threshold diagnostics remain pending.
+
 ### October 3, 2026 — Classical Support Vector Machine Baseline
 
-Established the Support Vector Machine as one of the first classical reference models for the research.
+Completed the initial Linear Support Vector Machine baseline using the reproducible 300,000-observation classical starter sample.
 
-The planned evaluation will include:
+The model was trained using the previously established 210,000-observation training partition. Preprocessing was implemented within a machine-learning pipeline using median imputation for missing values and feature standardization. Both preprocessing operations were fitted using the training partition only so that validation and held-out test information did not influence model fitting.
 
-- accuracy;
-- precision;
-- recall;
-- F1 score;
-- false-positive rate;
-- ROU-AUC, where appropriate;
-- training time; and
-- inference time.
+The trained model was evaluated using the separate 45,000-observation validation partition.
 
-The model preprocessing workflow will use training-only imputation and feature standardization so that validation and held-out test information does not influence preprocessing statistics.
+The initial validation results were:
 
-The resulting performance will form part of the classical reference against which later reduced-sample and quantum-machine-learning experiments may be interpreted.
+- **Accuracy:** 99.1844%;
+- **Precision:** 97.5809%;
+- **Recall:** 99.0675%;
+- **F1 score:** 98.3186%;
+- **False-positive rate:** 0.7785%;
+- **ROC-AUC:** 0.9988;
+- **Training time:** approximately 69.82 seconds; and
+- **Validation inference time:** approximately 0.145 seconds.
 
-**Status**: Data preparation and partitioning completed; Support Vector Machine training is the next active experimental milestone.
+The validation confusion matrix contained:
+
+- **33,903 true negatives;**
+- **266 false positives;**
+- **101 false negatives; and**
+- **10,730 true positives.**
+
+These results indicate strong initial discrimination between benign and malicious traffic within the stratified validation partition. However, the results are treated as an initial benchmark result and are not interpreted as evidence of equivalent performance on unseen operational traffic. Earlier dataset analysis demonstrated differences in malicious-traffic composition across CIC-IDS2017 collection files, so later source-file or collection-day sensitivity analysis will be used to further assess model generalization and potential benchmark-specific effects.
+
+The held-out test partition has not yet been used for model evaluation.
+
+**Generated artifacts:**
+
+- results/svm_validation_results.csv
+- results/svm_validation_confusion_matrix.png
+
+**Status:** Initial Linear Support Vector Machine training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
+
+### October 3, 2026 — Attack-Family-Level Generalization Analysis
+
+Performed an attack-family-level analysis of the leave-one-source-file-out sensitivity experiments to determine which successful malicious attack families could be detected when those families were absent from the model-training sources.
+
+The results demonstrated substantial variation in cross-family generalization.
+
+For the held-out Friday source, both models successfully detected most DDoS and Portscan observations despite neither attack family being represented in the training-source files. Linear SVM recall was approximately **99.97% for DDoS** and **99.22% for Portscan**, while Random Forest recall was approximately **98.83%** and **98.51%**, respectively. Neither model detected the 89 held-out Botnet observations.
+
+For the held-out Thursday source, the largest malicious family was `Infiltration - Portscan`. Linear SVM detected approximately **57.78%** of these observations, while Random Forest detected approximately **40.28%**. Detection of the smaller Web Attack and Infiltration categories was limited; however, several of these categories contained very few observations and are therefore not treated as reliable standalone performance estimates.
+
+For the held-out Tuesday source, neither model detected any of the 512 FTP-Patator or 367 SSH-Patator observations at the default classification threshold.
+
+For the held-out Wednesday source, Linear SVM demonstrated substantially stronger unseen-family detection than Random Forest for several attack types. Linear SVM detected approximately **91.35% of DoS Hulk** observations and **56.83% of DoS GoldenEye** observations. Detection of DoS Slowhttptest and DoS Slowloris was approximately 2%, and the single Heartbleed observation was not detected. Random Forest produced zero true-positive detections across the Wednesday attack families at the default classification threshold.
+
+These findings show that generalization to attack families absent from training is highly dependent on attack characteristics. Strong performance under random stratified validation did not guarantee equivalent performance when attack families were excluded from training.
+
+The results also show that the Linear SVM, although weaker than Random Forest under the random stratified validation experiment, demonstrated stronger generalization to several unseen attack families during the source-file holdout analysis.
+
+These experiments are not interpreted as zero-day attack detection because the evaluated attack types are known benchmark attack families. They instead measure model behavior when specific attack families are absent from the training-source files.
+
+Attack categories represented by only a very small number of observations are not treated as reliable standalone performance estimates.
+
+**Generated artifact:**
+
+- results/unseen_attack_family_sensitivity_results.csv
+
+**Status:** Attack-family-level sensitivity analysis completed; model-score and classification-threshold behavior remains under investigation.
 
 ### October 3, 2026 — Random Forest Baseline
 
-Established the Random Forest classifier as the second primary classical baseline.
+Completed the initial Random Forest classical baseline using the same reproducible training and validation partitions used for the Linear Support Vector Machine experiment.
 
-The Random Forest model will use the same training, validation, and held-out test partitions used for the Support Vector Machine so that the two classical models can be compared under consistent experimental conditions.
+The Random Forest was trained using the 210,000-observation training partition. Median imputation was incorporated into the preprocessing pipeline and fitted using training data only. The classifier used 300 decision trees, class-weight balancing by bootstrap sample, a fixed random seed of 42, and parallel processing.
 
-**Status**: Planned; model training and results pending.
+The trained model was evaluated on the separate 45,000-observation validation partition.
+
+The initial validation results were:
+
+- **Accuracy:** 99.9822%;
+- **Precision:** 99.9723%;
+- **Recall:** 99.9538%;
+- **F1 score:** 99.9631%;
+- **False-positive rate:** approximately 0.0088%;
+- **ROC-AUC:** approximately 1.0000;
+- **Training time:** approximately 79.41 seconds; and
+- **Validation inference time:** approximately 0.419 seconds.
+
+The validation confusion matrix contained:
+
+- **34,166 true negatives;**
+- **3 false positives;**
+- **5 false negatives; and**
+- **10,826 true positives.**
+
+The Random Forest therefore produced 8 classification errors among the 45,000 validation observations and outperformed the initial Linear Support Vector Machine baseline across the principal classification metrics.
+
+These results are treated as a larger-sample classical reference rather than evidence of equivalent performance on unseen operational traffic. Because previous inspection showed substantial variation in attack composition across CICIDS2017 collection files, additional source-file or collection-day sensitivity analysis will be performed to assess whether the high validation performance is influenced by characteristics of the benchmark dataset.
+
+The held-out test partition remains unused.
+
+The current Linear SVM and Random Forest results are also not yet the direct like-for-like comparators for the future quantum-kernel experiment. A separate classical comparator will later be trained using the same bounded observations and reduced feature set used for quantum evaluation.
+
+**Generated artifacts:**
+
+- results/random_forest_validation_results.csv
+- results/random_forest_validation_confusion_matrix.png
+- results/classical_validation_comparison.csv
+
+**Status:** Initial Random Forest training and validation completed; source-file sensitivity analysis and held-out testing remain pending.
 
 ### October 3, 2026 — Bounded Quantum-Comparison Dataset Preparation
 
@@ -324,6 +507,10 @@ The final sample size will be determined after classical baseline testing and in
 The bounded sampling process will preserve the separation between training, validation, and held-out testing data.
 
 **Status**: Methodology established; bounded sample has not yet been generated.
+
+Subsequent source-file holdout testing showed that the near-perfect Random Forest performance observed under random stratified validation did not consistently generalize when entire collection sources and their associated attack families were absent from training. Random Forest retained strong performance on the held-out Friday source but showed materially lower malicious-class recall on Thursday and zero true-positive detections on the Tuesday and Wednesday holdouts. These findings reinforce the decision to treat the random-split result as a benchmark reference rather than as evidence of equivalent performance under unseen-source or unseen-attack-family conditions.
+
+
 
 ### October 3, 2026 — Feature Reduction and Same-Sample Classical Comparison
 
@@ -355,37 +542,31 @@ No quantum experiment or quantum-performance result has been completed or claime
 
 **Status**: Future research phase; not yet commenced experimentally.
 
-### Current Project Status as of October 3, 2026 
+Current Project Status as of October 3, 2026
 
-The research project has formally commenced and has progressed beyond repository and methodology setup into active dataset preparation and classical experimental implementation.
+The research project has progressed from repository setup and classical baseline development into active model-validation and generalization analysis.
 
-Completed activities include:
-
-- creation of the GitHub research repository;
-- establishment of the research-project structure;
-- documentation of the selected improved/corrected CIC-IDS2017 dataset;
-- creation of the experimental methodology;
-- establishment of the research-progress log;
-- validation of local improved CIC-IDS2017 files;
-- generation of file-level SHA-256 provenance records;
-- successful loading of five corrected CIC-IDS2017 CSV files;
-- inspection of 2,099,976 raw observations across 93 columns;
-- preservation of original attack labels and attempted-category codes;
-- identification and documented treatment of 11,979 attempted attack flows;
-- creation of the benign-versus-malicious binary classification target;
-- construction of a leakage-aware numeric feature matrix containing 85 candidate features;
-- assessment of missing values;
-- duplicate and conflicting-label analysis;
-- removal of three redundant duplicate observations;
-- establishment of a cleaned dataset containing 2,099,973 observations;
-- source-file and attack-distribution analysis;
-- creation of a reproducible 300,000-observation classical working sample;
+Completed activities now include:
+- creation of the GitHub research repository and experimental documentation;
+- validation and provenance documentation for the improved/corrected CIC-IDS2017 dataset;
+- loading and inspection of approximately 2.1 million observations;
+- construction of the binary benign-versus-malicious target;
+- documented treatment of attempted attack flows;
+- creation of a leakage-aware 85-feature numeric matrix;
+- missing-value, duplicate, and conflicting-label assessment;
+- creation of a reproducible 300,000-observation classical starter sample;
 - creation of reproducible 70/15/15 training, validation, and held-out test partitions;
-- verification that class proportions remained stable across partitions; and
-- verification that source-file proportions remained closely aligned across training, validation, and held-out test partitions.
+- source-file distribution auditing;
+- completion of the Linear Support Vector Machine validation baseline;
+- completion of the Random Forest validation baseline;
+- completion of the initial classical model comparison;
+- completion of leave-one-source-file-out sensitivity analysis;
+- identification of substantial variation in cross-source malicious-detection performance;
+- confirmation that successful malicious attack families are confined to individual source files within the development data; and
+- confirmation that each held-out source-file experiment simultaneously introduces unseen attack families and source-level distribution shift.
 
-The next active experimental milestone is construction and training of the initial SVM baseline using training-only imputation and feature standardization, followed by validation-set evaluation.
+The sensitivity analysis showed that the high performance observed under random stratified validation does not uniformly generalize to held-out source files. In particular, some source holdouts produced substantial reductions in malicious-class recall, while other holdouts, especially Friday, retained strong detection performance.
 
-The Random Forest baseline will follow using the same established data partitions.
+The next active analytical milestone is attack-family-level recall analysis and investigation of model score behavior under source-file holdout conditions. The final 45,000-observation test partition remains unused and will be evaluated only after the classical baseline methodology has been finalized.
 
 No quantum-computing experimental result is claimed at this stage.
