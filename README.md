@@ -10,7 +10,7 @@ This repository does **not** claim that the full cloud/on-premise or real-time q
 
 ## Dataset choice
 
-Version 2 is designed for the **improved/corrected CIC-IDS2017 dataset** released by the DistriNet research group after peer-reviewed work identified issues in the original CICIDS2017 data-generation and labeling pipeline.
+Version 2 is designed for the **improved/corrected CICIDS2017 dataset** released by the DistriNet research group after peer-reviewed work identified issues in the original CICIDS2017 data-generation and labeling pipeline.
 
 Recommended source:
 - Dataset documentation: https://intrusion-detection.distrinet-research.be/CNS2022/CICIDS2017.html
@@ -22,7 +22,7 @@ Primary methodological references:
 
 The raw dataset is intentionally **not** included in this repository.
 
-## What Version 2 changes
+## What this version changes (wrt the updated CICIDS2017 dataset)
 
 1. Uses the corrected/improved dataset rather than the original MachineLearningCSV release.
 2. Computes SHA-256 hashes for input CSV files and records dataset provenance.
