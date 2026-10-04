@@ -81,7 +81,6 @@ Dataset-source information is documented separately in:
 
 
 data/README.md
-```
 
 ---
 
@@ -141,7 +140,7 @@ The objective is not to alter the dataset to improve model performance, but to e
 
 ---
 
-## 7. Feature Preparation
+**## 7. Feature Preparation**
 
 Model features will be selected from numeric or appropriately encoded variables suitable for machine-learning analysis.
 
@@ -193,7 +192,7 @@ Used to:
 
 Used to:
 
-- review model behavior;
+- review model behaviour;
 - compare reasonable model configurations;
 - identify implementation problems; and
 - support methodological decisions without repeatedly examining the held-out test set.
@@ -204,7 +203,7 @@ Used only after the principal model methodology has been established.
 
 The held-out test set will not be repeatedly used for model tuning.
 
-If later changes are made because of test-set results, those changes will be documented and a more appropriate confirmatory validation approach may be established.
+If later changes are made because of test-set results, those changes will be documented, and a more appropriate confirmatory validation approach may be established.
 
 ---
 
@@ -236,7 +235,7 @@ As a result, holding out an entire day can simultaneously change:
 - the source environment; and
 - the attack-family composition of the test set.
 
-Therefore, a day-level holdout result will not automatically be interpreted as a pure measure of temporal generalization.
+Therefore, a day-level holdout result will not automatically be interpreted as a pure measure of temporal generalisation.
 
 Instead, it will be treated as a sensitivity test involving possible temporal, source-domain, and attack-composition changes.
 
@@ -255,7 +254,7 @@ For the initial large-data baseline, a computationally practical linear Support 
 The workflow may include:
 
 1. training-set-based imputation;
-2. feature standardization;
+2. feature standardisation;
 3. class weighting where appropriate;
 4. model training;
 5. validation evaluation; and
@@ -303,6 +302,22 @@ Operational considerations are important because a model that produces high pred
 
 The first classical experiment may use a large portion of the improved dataset or the full cleaned dataset where computational resources permit.
 
+For the initial implementation run, the cleaned dataset contains approximately **2.1 million observations**. To support a computationally manageable first classical baseline while validating the preprocessing and modelling pipeline, I will use a reproducible stratified working sample of **300,000 observations**.
+
+This 300,000-observation sample is not intended to replace the larger cleaned dataset. It is a bounded starter sample used to validate the end-to-end classical workflow, including preprocessing, partitioning, model training, and evaluation. The larger cleaned dataset will remain available for subsequent expanded classical testing after the initial pipeline is confirmed to be stable.
+
+If local computational constraints require a row limit or stratified sample, the following will be documented:
+
+- original number of rows;
+- selected number of rows;
+- sampling method;
+- random seed;
+- resulting class distribution; and
+- reason for applying the limit.
+
+This larger classical experiment will establish contextual reference performance.
+
+It will **not** automatically serve as the direct comparator for later quantum-machine-learning experiments because quantum-kernel methods are expected to require substantially smaller sample sizes.
 If local computational constraints require a row limit or stratified sample, the following will be documented:
 
 - original number of rows;
