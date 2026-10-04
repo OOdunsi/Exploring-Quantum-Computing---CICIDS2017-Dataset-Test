@@ -280,24 +280,40 @@ Generated artifact:
 
 ### October 3, 2026 — Classical Support Vector Machine Baseline
 
-Established the Support Vector Machine as one of the first classical reference models for the research.
+Completed the initial Linear Support Vector Machine baseline using the reproducible 300,000-observation classical starter sample.
 
-The planned evaluation will include:
+The model was trained using the previously established 210,000-observation training partition. Preprocessing was implemented within a machine-learning pipeline using median imputation for missing values and feature standardization. Both preprocessing operations were fitted using the training partition only so that validation and held-out test information did not influence model fitting.
 
-- accuracy;
-- precision;
-- recall;
-- F1 score;
-- false-positive rate;
-- ROU-AUC, where appropriate;
-- training time; and
-- inference time.
+The trained model was evaluated using the separate 45,000-observation validation partition.
 
-The model preprocessing workflow will use training-only imputation and feature standardization so that validation and held-out test information does not influence preprocessing statistics.
+The initial validation results were:
 
-The resulting performance will form part of the classical reference against which later reduced-sample and quantum-machine-learning experiments may be interpreted.
+- **Accuracy:** 99.1844%;
+- **Precision:** 97.5809%;
+- **Recall:** 99.0675%;
+- **F1 score:** 98.3186%;
+- **False-positive rate:** 0.7785%;
+- **ROC-AUC:** 0.9988;
+- **Training time:** approximately 69.82 seconds; and
+- **Validation inference time:** approximately 0.145 seconds.
 
-**Status**: Data preparation and partitioning completed; Support Vector Machine training is the next active experimental milestone.
+The validation confusion matrix contained:
+
+- **33,903 true negatives;**
+- **266 false positives;**
+- **101 false negatives; and**
+- **10,730 true positives.**
+
+These results indicate strong initial discrimination between benign and malicious traffic within the stratified validation partition. However, the results are treated as an initial benchmark result and are not interpreted as evidence of equivalent performance on unseen operational traffic. Earlier dataset analysis demonstrated differences in malicious-traffic composition across CIC-IDS2017 collection files, so later source-file or collection-day sensitivity analysis will be used to further assess model generalization and potential benchmark-specific effects.
+
+The held-out test partition has not yet been used for model evaluation.
+
+**Generated artifacts:**
+
+- results/svm_validation_results.csv
+- results/svm_validation_confusion_matrix.png
+
+**Status:** Initial Linear Support Vector Machine training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
 
 ### October 3, 2026 — Random Forest Baseline
 
