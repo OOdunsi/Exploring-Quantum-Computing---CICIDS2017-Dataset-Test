@@ -66,7 +66,7 @@ Local dataset files were successfully identified and validated, and file-level S
 
 ---
 
-### October 3, 2026 — Dataset Validation and Preprocessing 
+### October 3, 2026 - Dataset Validation and Preprocessing 
 
 Performed the initial validation, inspection, and preprocessing assessment of the improved/corrected CIC-IDS2017 dataset.
 
@@ -192,7 +192,7 @@ This finding confirms that collection day and attack family composition must be 
 
 **Status**: Initial full-dataset source-file distribution audit completed.
 
-### October 3, 2026 — Initial Classical Working Sample Preparation 
+### October 3, 2026 - Initial Classical Working Sample Preparation 
 
 Created a computationally bounded classical working sample from the cleaned CIC-IDS2017 dataset for the initial classical model-development phase.
 
@@ -219,7 +219,7 @@ The 300,000-observation sample is intended as an initial computationally bounded
 
 **Status**: Completed.
 
-### October 3, 2026 — Reproducible Classical Data Partitioning 
+### October 3, 2026 - Reproducible Classical Data Partitioning 
 
 Created reproducible stratified training, validation, and held-out test partitions from the 300,000-observation classical working sample.
 
@@ -249,7 +249,7 @@ The two missing training values will be handled through the preprocessing pipeli
 
 **Status**: Reproducible 70/15/15 partitioning completed.
 
-### October 3, 2026 — Partition-Level Source-File Distribution Audit 
+### October 3, 2026 - Partition-Level Source-File Distribution Audit 
 
 Conducted a second source-file audit after creation of the training, validation, and held-out test partitions.
 
@@ -349,7 +349,7 @@ When wednesday.csv was withheld:
 
 The Random Forest nevertheless produced a high ROC-AUC value of approximately 0.9960, indicating that score ranking and default classification-threshold behavior may require further investigation under source-level distribution shift.
 
-## October 3, 2026 — Attack-Family Distribution and Training-Overlap Audit
+## October 3, 2026 - Attack-Family Distribution and Training-Overlap Audit
 
 Following the source-file sensitivity analysis, I examined how successful malicious attack families were distributed across the CIC-IDS2017 source files.
 
@@ -420,7 +420,7 @@ The held-out test partition has not yet been used for model evaluation.
 
 **Status:** Initial Linear Support Vector Machine training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
 
-### October 3, 2026 — Attack-Family-Level Generalization Analysis
+### October 3, 2026 - Attack-Family-Level Generalization Analysis
 
 Performed an attack-family-level analysis of the leave-one-source-file-out sensitivity experiments to determine which successful malicious attack families could be detected when those families were absent from the model-training sources.
 
@@ -447,6 +447,27 @@ Attack categories represented by only a very small number of observations are no
 - results/unseen_attack_family_sensitivity_results.csv
 
 **Status:** Attack-family-level sensitivity analysis completed; model-score and classification-threshold behavior remains under investigation.
+
+### October 4, 2026 - Random Forest Score and Threshold Diagnostic
+
+Investigated the Random Forest probability-score behavior for the held-out Tuesday and Wednesday source files after the source-file sensitivity analysis produced zero malicious detections at the default classification threshold despite high ROC-AUC values.
+
+For the held-out Tuesday source, benign observations had a median malicious-class probability of approximately **0.0000**, while malicious observations had a median probability of approximately **0.1167**. The maximum malicious probability was approximately **0.2367**, meaning that none of the 879 malicious observations reached the default Random Forest classification threshold of 0.50.
+
+For the held-out Wednesday source, benign observations again had a median malicious-class probability of approximately **0.0000**, while malicious observations had a median probability of approximately **0.0567**. The maximum malicious probability was approximately **0.4733**, which remained below the default 0.50 classification threshold.
+
+A diagnostic threshold analysis showed that lowering the threshold would recover some malicious observations. At a threshold of 0.10, Random Forest recall increased to approximately **56.66% for Tuesday** and **37.76% for Wednesday**, while false-positive rates remained approximately **0.19%** and **0.12%**, respectively.
+
+These lower-threshold results are treated strictly as diagnostic findings and are not used to modify the established baseline model. The original default classification threshold remains unchanged.
+
+The results indicate that the Random Forest continued to assign higher malicious-class scores to many held-out attack observations than to benign observations, but its score calibration shifted substantially under source-file and unseen-attack-family distribution changes. This finding helps explain the combination of high ROC-AUC values and zero recall at the default threshold.
+
+**Generated artifacts:**
+
+- results/rf_source_holdout_score_distribution.csv
+- results/rf_source_holdout_threshold_diagnostic.csv
+
+**Status:** Random Forest score-distribution and threshold-behavior diagnostic completed. Baseline threshold retained unchanged.
 
 ### October 3, 2026 — Random Forest Baseline
 
