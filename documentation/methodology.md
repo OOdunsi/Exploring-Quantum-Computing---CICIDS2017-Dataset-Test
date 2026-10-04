@@ -79,7 +79,7 @@ For that reason, this project will use the improved/recreated CIC-IDS2017 releas
 
 Dataset-source information is documented separately in:
 
-```text
+
 data/README.md
 ```
 
@@ -126,7 +126,16 @@ The inspection process will include:
 - reviewing records identified as attempted attacks or otherwise ambiguous; and
 - reviewing potential identifier or scenario-specific fields that could introduce information leakage.
 
+**## 6.1. Treatment of Attempted Attack Flows:**
+The improved CIC-IDS2017 release explicitly identifies flows associated with attempted attacks that did not necessarily exhibit the malicious activity of a successful attack.
+
+For the primary binary-classification baseline, these attempted flows will be assigned to the benign class, consistent with the evaluation methodology reported by the researchers who produced the corrected dataset.
+
+The original attack labels and attempted-category codes will be preserved so that this treatment remains auditable and may be evaluated separately through sensitivity analysis.
+
 Any records removed or modified during cleaning will be documented.
+
+The objective is not to alter the dataset to improve model performance, but to establish a transparent and reproducible preprocessing procedure..
 
 The objective is not to alter the dataset to improve model performance, but to establish a transparent and reproducible preprocessing procedure.
 
