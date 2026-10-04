@@ -1,0 +1,16 @@
+heldout_source,attack_family,heldout_count,seen_in_other_sources
+friday.csv,Portscan,19400,False
+friday.csv,DDoS,11584,False
+friday.csv,Botnet,89,False
+thursday.csv,Infiltration - Portscan,8664,False
+thursday.csv,Web Attack - Brute Force,10,False
+thursday.csv,Infiltration,3,False
+thursday.csv,Web Attack - XSS,3,False
+thursday.csv,Web Attack - SQL Injection,1,False
+tuesday.csv,FTP-Patator,512,False
+tuesday.csv,SSH-Patator,367,False
+wednesday.csv,DoS Hulk,19138,False
+wednesday.csv,DoS GoldenEye,945,False
+wednesday.csv,DoS Slowloris,453,False
+wednesday.csv,DoS Slowhttptest,205,False
+wednesday.csv,Heartbleed,1,False

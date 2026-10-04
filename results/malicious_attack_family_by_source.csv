@@ -1,0 +1,16 @@
+original_label,friday.csv,thursday.csv,tuesday.csv,wednesday.csv
+Botnet,89,0,0,0
+DDoS,11584,0,0,0
+DoS GoldenEye,0,0,0,945
+DoS Hulk,0,0,0,19138
+DoS Slowhttptest,0,0,0,205
+DoS Slowloris,0,0,0,453
+FTP-Patator,0,0,512,0
+Heartbleed,0,0,0,1
+Infiltration,0,3,0,0
+Infiltration - Portscan,0,8664,0,0
+Portscan,19400,0,0,0
+SSH-Patator,0,0,367,0
+Web Attack - Brute Force,0,10,0,0
+Web Attack - SQL Injection,0,1,0,0
+Web Attack - XSS,0,3,0,0

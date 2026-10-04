@@ -1,13 +1,19 @@
+# Raw dataset — never commit
 data/cicids2017_improved/
-*.csv
+
+# Large/raw data formats
 *.pcap
 *.zip
 
+# Python / environment
 __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
 
+# Model binaries
 *.joblib
+
+# OS files
 .DS_Store
 Thumbs.db

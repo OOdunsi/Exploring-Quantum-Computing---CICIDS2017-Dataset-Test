@@ -1,0 +1,31 @@
+heldout_source,attack_family,model,attack_rows,detected,missed,recall
+friday.csv,Botnet,Linear SVM,89,0,89,0.0
+friday.csv,Botnet,Random Forest,89,0,89,0.0
+friday.csv,DDoS,Linear SVM,11584,11580,4,0.9996546961325967
+friday.csv,DDoS,Random Forest,11584,11449,135,0.9883459944751382
+friday.csv,Portscan,Linear SVM,19400,19249,151,0.9922164948453608
+friday.csv,Portscan,Random Forest,19400,19110,290,0.9850515463917526
+thursday.csv,Infiltration,Linear SVM,3,1,2,0.3333333333333333
+thursday.csv,Infiltration,Random Forest,3,0,3,0.0
+thursday.csv,Infiltration - Portscan,Linear SVM,8664,5006,3658,0.5777931671283472
+thursday.csv,Infiltration - Portscan,Random Forest,8664,3490,5174,0.4028162511542013
+thursday.csv,Web Attack - Brute Force,Linear SVM,10,0,10,0.0
+thursday.csv,Web Attack - Brute Force,Random Forest,10,0,10,0.0
+thursday.csv,Web Attack - SQL Injection,Linear SVM,1,0,1,0.0
+thursday.csv,Web Attack - SQL Injection,Random Forest,1,0,1,0.0
+thursday.csv,Web Attack - XSS,Linear SVM,3,0,3,0.0
+thursday.csv,Web Attack - XSS,Random Forest,3,0,3,0.0
+tuesday.csv,FTP-Patator,Linear SVM,512,0,512,0.0
+tuesday.csv,FTP-Patator,Random Forest,512,0,512,0.0
+tuesday.csv,SSH-Patator,Linear SVM,367,0,367,0.0
+tuesday.csv,SSH-Patator,Random Forest,367,0,367,0.0
+wednesday.csv,DoS GoldenEye,Linear SVM,945,537,408,0.5682539682539682
+wednesday.csv,DoS GoldenEye,Random Forest,945,0,945,0.0
+wednesday.csv,DoS Hulk,Linear SVM,19138,17483,1655,0.913522834151949
+wednesday.csv,DoS Hulk,Random Forest,19138,0,19138,0.0
+wednesday.csv,DoS Slowhttptest,Linear SVM,205,4,201,0.01951219512195122
+wednesday.csv,DoS Slowhttptest,Random Forest,205,0,205,0.0
+wednesday.csv,DoS Slowloris,Linear SVM,453,9,444,0.019867549668874173
+wednesday.csv,DoS Slowloris,Random Forest,453,0,453,0.0
+wednesday.csv,Heartbleed,Linear SVM,1,0,1,0.0
+wednesday.csv,Heartbleed,Random Forest,1,0,1,0.0

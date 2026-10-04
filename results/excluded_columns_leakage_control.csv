@@ -1,0 +1,14 @@
+excluded_column
+Attempted Category
+Dst IP
+Flow ID
+Label
+Src IP
+Timestamp
+__row_id
+__source_file
+binary_target
+is_attempted
+label_normalized
+original_attempted_category
+original_label
