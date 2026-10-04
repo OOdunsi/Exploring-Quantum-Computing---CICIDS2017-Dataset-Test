@@ -317,11 +317,45 @@ The held-out test partition has not yet been used for model evaluation.
 
 ### October 3, 2026 — Random Forest Baseline
 
-Established the Random Forest classifier as the second primary classical baseline.
+Completed the initial Random Forest classical baseline using the same reproducible training and validation partitions used for the Linear Support Vector Machine experiment.
 
-The Random Forest model will use the same training, validation, and held-out test partitions used for the Support Vector Machine so that the two classical models can be compared under consistent experimental conditions.
+The Random Forest was trained using the 210,000-observation training partition. Median imputation was incorporated into the preprocessing pipeline and fitted using training data only. The classifier used 300 decision trees, class-weight balancing by bootstrap sample, a fixed random seed of 42, and parallel processing.
 
-**Status**: Planned; model training and results pending.
+The trained model was evaluated on the separate 45,000-observation validation partition.
+
+The initial validation results were:
+
+- **Accuracy:** 99.9822%;
+- **Precision:** 99.9723%;
+- **Recall:** 99.9538%;
+- **F1 score:** 99.9631%;
+- **False-positive rate:** approximately 0.0088%;
+- **ROC-AUC:** approximately 1.0000;
+- **Training time:** approximately 79.41 seconds; and
+- **Validation inference time:** approximately 0.419 seconds.
+
+The validation confusion matrix contained:
+
+- **34,166 true negatives;**
+- **3 false positives;**
+- **5 false negatives; and**
+- **10,826 true positives.**
+
+The Random Forest therefore produced 8 classification errors among the 45,000 validation observations and outperformed the initial Linear Support Vector Machine baseline across the principal classification metrics.
+
+These results are treated as a larger-sample classical reference rather than evidence of equivalent performance on unseen operational traffic. Because previous inspection showed substantial variation in attack composition across CICIDS2017 collection files, additional source-file or collection-day sensitivity analysis will be performed to assess whether the high validation performance is influenced by characteristics of the benchmark dataset.
+
+The held-out test partition remains unused.
+
+The current Linear SVM and Random Forest results are also not yet the direct like-for-like comparators for the future quantum-kernel experiment. A separate classical comparator will later be trained using the same bounded observations and reduced feature set used for quantum evaluation.
+
+**Generated artifacts:**
+
+- results/random_forest_validation_results.csv
+- results/random_forest_validation_confusion_matrix.png
+- results/classical_validation_comparison.csv
+
+**Status:** Initial Random Forest training and validation completed; source-file sensitivity analysis and held-out testing remain pending.
 
 ### October 3, 2026 — Bounded Quantum-Comparison Dataset Preparation
 
