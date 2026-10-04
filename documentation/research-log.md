@@ -420,6 +420,34 @@ The held-out test partition has not yet been used for model evaluation.
 
 **Status:** Initial Linear Support Vector Machine training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
 
+### October 3, 2026 — Attack-Family-Level Generalization Analysis
+
+Performed an attack-family-level analysis of the leave-one-source-file-out sensitivity experiments to determine which successful malicious attack families could be detected when those families were absent from the model-training sources.
+
+The results demonstrated substantial variation in cross-family generalization.
+
+For the held-out Friday source, both models successfully detected most DDoS and Portscan observations despite neither attack family being represented in the training-source files. Linear SVM recall was approximately **99.97% for DDoS** and **99.22% for Portscan**, while Random Forest recall was approximately **98.83%** and **98.51%**, respectively. Neither model detected the 89 held-out Botnet observations.
+
+For the held-out Thursday source, the largest malicious family was `Infiltration - Portscan`. Linear SVM detected approximately **57.78%** of these observations, while Random Forest detected approximately **40.28%**. Detection of the smaller Web Attack and Infiltration categories was limited; however, several of these categories contained very few observations and are therefore not treated as reliable standalone performance estimates.
+
+For the held-out Tuesday source, neither model detected any of the 512 FTP-Patator or 367 SSH-Patator observations at the default classification threshold.
+
+For the held-out Wednesday source, Linear SVM demonstrated substantially stronger unseen-family detection than Random Forest for several attack types. Linear SVM detected approximately **91.35% of DoS Hulk** observations and **56.83% of DoS GoldenEye** observations. Detection of DoS Slowhttptest and DoS Slowloris was approximately 2%, and the single Heartbleed observation was not detected. Random Forest produced zero true-positive detections across the Wednesday attack families at the default classification threshold.
+
+These findings show that generalization to attack families absent from training is highly dependent on attack characteristics. Strong performance under random stratified validation did not guarantee equivalent performance when attack families were excluded from training.
+
+The results also show that the Linear SVM, although weaker than Random Forest under the random stratified validation experiment, demonstrated stronger generalization to several unseen attack families during the source-file holdout analysis.
+
+These experiments are not interpreted as zero-day attack detection because the evaluated attack types are known benchmark attack families. They instead measure model behavior when specific attack families are absent from the training-source files.
+
+Attack categories represented by only a very small number of observations are not treated as reliable standalone performance estimates.
+
+**Generated artifact:**
+
+- results/unseen_attack_family_sensitivity_results.csv
+
+**Status:** Attack-family-level sensitivity analysis completed; model-score and classification-threshold behavior remains under investigation.
+
 ### October 3, 2026 — Random Forest Baseline
 
 Completed the initial Random Forest classical baseline using the same reproducible training and validation partitions used for the Linear Support Vector Machine experiment.
