@@ -16,9 +16,9 @@ Initial implementation activities include:
 - establishing the repository structure and research documentation;
 - documenting the selected dataset and its provenance;
 - preparing the preprocessing methodology;
-- defining an approximate 70-percent training, 15-percent validation, and 15-percent held-out testing methodology;
+- defining an approximate 70% training, 15% validation, and 15% held-out testing methodology;
 - preparing Support Vector Machine and Random Forest baseline models;
-- establishing evaluation metrics including accuracy, precision, recall, F1 score, false-positive rate, Receiver Operating Characteristic Area Under the Curve, training time, and inference time; and
+- establishing evaluation metrics including accuracy, precision, recall, F1 score, false-positive rate, ROC-AUC, training time, and inference time; and
 - preparing a bounded sampling methodology for future quantum-kernel comparison.
 
 No quantum-computing experimental results are claimed at this stage. Quantum experimentation will follow only after the classical baseline and reduced-feature comparison methodology have been validated.
@@ -45,63 +45,238 @@ Initial repository activities included:
 
 ---
 
-### October 3, 2026 — Dataset Documentation and Provenance Setup
+### October 3, 2026 — Dataset Documentation and Provenance Setup 
 
-Began documenting the improved/corrected CIC-IDS2017 dataset selected for the initial experimental phase.
+Documented the improved/corrected CICIDS2017 dataset selected for the initial experimental phase.
 
 The dataset documentation identifies:
 
-- the original CIC-IDS2017 dataset;
+- the original CICIDS2017 dataset;
 - the improved/corrected release selected for this research;
 - the research sources associated with the corrected release;
 - the local storage location for the dataset;
 - the decision not to redistribute the raw CSV files through the public GitHub repository; and
-- the planned use of file-level provenance records and SHA-256 checksums.
+- the use of file-level provenance records and SHA-256 checksums.
 
 The raw dataset files are maintained locally and excluded from Git version control.
 
-**Status:** Initial documentation completed; file-level validation and checksum generation pending.
+Local dataset files were successfully identified and validated, and file-level SHA-256 provenance records were generated to support reproducibility and identification of the exact dataset files used during experimentation.
+
+**Status:** Dataset documentation and initial file-level provenance validation completed.
 
 ---
 
-### October 3, 2026 — Dataset Validation and Preprocessing
+### October 3, 2026 — Dataset Validation and Preprocessing 
 
-The dataset-validation and preprocessing phase was established as the next implementation milestone.
+Performed the initial validation, inspection, and preprocessing assessment of the improved/corrected CIC-IDS2017 dataset.
 
-Planned activities include:
+Five CSV files were successfully loaded into the research environment.
 
-- identifying the exact dataset files used;
-- generating SHA-256 checksums;
-- reviewing dataset dimensions and column names;
-- identifying missing, infinite, duplicate, or unusable records;
-- verifying benign and malicious class labels;
-- preserving original attack-family labels;
-- evaluating ambiguous or attempted-attack records;
-- removing or controlling potential identifier and leakage-prone features;
-- converting the initial target to binary benign-versus-malicious classification; and
-- documenting all preprocessing decisions.
+The combined raw dataset contained:
 
-**Status:** Methodology established; experimental preprocessing not yet completed.
+- **2,099,976 observations;**
+- **93 columns;** and
+- traffic collected across five source files: `monday.csv`, `tuesday.csv`, `wednesday.csv`, `thursday.csv`, and `friday.csv`.
 
----
+The dataset inspection confirmed the presence of the expected `Label` and `Attempted Category` fields.
 
-### October 3, 2026 — Classical Data Partitioning
+Original attack-family labels and attempted-category values were preserved before constructing the binary classification target.
 
-Established the planned initial dataset-partitioning methodology.
+#### Attempted-Flow Inspection
 
-The first classical experiments will use approximately:
+The improved dataset contained **11,979 records** identified as attempted attack flows.
 
-- 70% training data;
-- 15% validation data; and
-- 15% held-out test data.
+Attempted-flow labels included categories such as:
 
-The initial split will use a documented random seed and stratification by the benign-versus-malicious target where methodologically appropriate.
+- Botnet - Attempted;
+- DoS Slowhttptest - Attempted;
+- DoS Slowloris - Attempted;
+- Web Attack - Brute Force - Attempted;
+- Web Attack - XSS - Attempted;
+- DoS Hulk - Attempted;
+- DoS GoldenEye - Attempted;
+- Infiltration - Attempted;
+- SSH-Patator - Attempted;
+- FTP-Patator - Attempted; and
+- Web Attack - SQL Injection - Attempted.
 
-Additional source-file and collection-day sensitivity analysis will be considered to evaluate potential dataset leakage or benchmark artifacts.
+For the primary binary-classification baseline, attempted flows were assigned to the benign class while their original attack labels and attempted-category codes were preserved for auditability and later sensitivity analysis.
 
-**Status:** Methodology established; partitioning execution pending.
+The resulting binary target was defined as:
 
----
+- `0` = benign traffic and attempted attack flows;
+- `1` = successful malicious attack traffic.
+
+The resulting target distribution was:
+
+- **1,594,545 benign/attempted observations;**
+- **505,431 malicious observations.**
+
+#### Leakage-Aware Feature Preparation
+
+A leakage-aware numeric feature matrix was constructed by excluding direct labels, internal research metadata, obvious identifiers, and fields that could directly or indirectly reveal the classification target.
+
+Excluded fields included:
+
+- Label;
+- Attempted Category;
+- Flow ID;
+- Source Internet Protocol address;
+- Destination Internet Protocol address;
+- Timestamp;
+- Internal row identifiers;
+- Source-file metadata;
+- Preserved original-label fields;
+- Binary-target fields; and
+- Attempted-flow helper variables.
+
+After these exclusions, the numeric feature matrix contained:
+
+- 2,099,976 observations;
+- 85 candidate numeric features.
+
+No feature column consisted entirely of missing values.
+
+### **Missing-Value Assessment**
+
+The full feature matrix contained only 10 missing feature values across five observations.
+
+The missing values occurred in:
+
+- Flow Bytes/s; and
+- Flow Packets/s.
+
+These values were not manually imputed at this stage. Missing-value treatment will be performed within the model preprocessing pipeline using statistics learned exclusively from the training partition.
+
+### **Duplicate and Label-Conflict Assessment**
+The duplicate audit identified:
+
+- six observations involved in exact feature/target duplicate pairs; and
+- three redundant duplicate observations beyond the first occurrence.
+
+A separate conflicting-label assessment found zero identical feature sets associated with different binary target labels.
+
+The three redundant duplicate observations were removed before creation of the working classical dataset.
+
+The resulting cleaned dataset contained:
+
+- 2,099,973 observations;
+
+- 85 candidate model features.
+
+**Status**: Initial dataset validation, binary-target construction, leakage-aware feature preparation, missing-value assessment, and duplicate assessment completed.
+
+### ***October 3, 2026 — Initial Source-File and Attack-Distribution Audit 
+
+Conducted an initial source-file audit to determine how benign and malicious observations are distributed across the five CIC-IDS2017 collection files.
+
+The full dataset contained:
+
+- friday.csv: 547,557 observations;
+- wednesday.csv: 496,641 observations;
+- monday.csv: 371,624 observations;
+- thursday.csv: 362,076 observations; and
+- tuesday.csv: 322,078 observations.
+
+The audit confirmed that malicious traffic is not uniformly distributed across collection files.
+
+In particular:
+
+- monday.csv contained 371,624 benign observations and no malicious observations;
+- friday.csv contained 292,611 benign observations and 254,946 malicious observations;
+- wednesday.csv contained 324,996 benign observations and 171,645 malicious observations;
+- thursday.csv contained 290,169 benign observations and 71,907 malicious observations; and
+- tuesday.csv contained 315,145 benign observations and 6,933 malicious observations.
+
+This finding confirms that collection day and attack family composition must be considered when interpreting later model performance. The primary classical baseline will therefore use stratified random partitioning, while a separate source-file or collection-day sensitivity analysis may later be performed.
+
+**Status**: Initial full-dataset source-file distribution audit completed.
+
+### October 3, 2026 — Initial Classical Working Sample Preparation 
+
+Created a computationally bounded classical working sample from the cleaned CIC-IDS2017 dataset for the initial classical model-development phase.
+
+The full cleaned feature matrix contained:
+
+- 2,099,973 observations;
+- 85 candidate numeric features.
+
+To support a computationally manageable starter experiment while validating the end-to-end classical machine-learning pipeline, a reproducible stratified sample of 300,000 observations was selected using a fixed random seed of 42.
+
+The working classical dataset contained:
+
+- 227,795 benign/attempted observations;
+- 72,205 malicious observations.
+
+The corresponding class proportions were:
+
+- 75.9317% benign/attempted;
+- 24.0683% malicious.
+
+The stratified sampling procedure therefore preserved the approximate benign-versus-malicious class distribution of the larger cleaned dataset.
+
+The 300,000-observation sample is intended as an initial computationally bounded classical starter run and does not replace the larger cleaned dataset, which remains available for subsequent expanded classical evaluation.
+
+**Status**: Completed.
+
+### October 3, 2026 — Reproducible Classical Data Partitioning 
+
+Created reproducible stratified training, validation, and held-out test partitions from the 300,000-observation classical working sample.
+
+The split used a fixed random seed of 42 and preserved the benign-versus-malicious class distribution.
+
+The resulting partitions were:
+
+- Training: 210,000 observations (70%);
+- Validation: 45,000 observations (15%);
+- Held-out test: 45,000 observations (15%).
+
+The malicious-class rates were:
+
+- Training: 24.0686%;
+- Validation: 24.0689%;
+- Held-out test: 24.0667%.
+
+The nearly identical malicious-class rates across all three partitions confirmed that the stratification procedure preserved the class composition of the working classical dataset.
+
+A post-partition missing-value check found:
+
+- Training: 2 missing feature values;
+- Validation: 0 missing feature values;
+- Held-out test: 0 missing feature values.
+
+The two missing training values will be handled through the preprocessing pipeline using imputation statistics learned from the training partition only.
+
+**Status**: Reproducible 70/15/15 partitioning completed.
+
+### October 3, 2026 — Partition-Level Source-File Distribution Audit 
+
+Conducted a second source-file audit after creation of the training, validation, and held-out test partitions.
+
+The purpose of this audit was to determine whether any one of the five CICIDS2017 source files had become disproportionately concentrated in a particular partition.
+
+The observed source-file proportions were:
+
+- friday.csv (Training - 25.9771%; Validation - 26.2267%; Held-Out Test - 25.6956%)
+- wednesday.csv (Training - 23.6224%; Validation - 23.6067%; Held-Out Test - 23.4800%)
+- monday.csv (Training - 17.5995%; Validation - 17.5578%; Held-Out Test - 17.8133%)
+- thursday.csv (Training - 17.2795%; Validation - 17.2200%; Held-Out Test - 17.4689%)
+- tuesday.csv (Training - 15.5214%; Validation - 15.3889%; Held-Out Test - 15.5422%)
+
+
+The source-file proportions remained closely aligned across the training, validation, and held-out test partitions.
+
+This indicates that the stratified random partitioning procedure did not materially concentrate any individual source file within one partition.
+
+Because malicious traffic is not uniformly distributed across collection files, this balanced source-file representation strengthens the initial classical baseline while not eliminating the need for later source-file or collection-day sensitivity analysis.
+
+The source-file distribution results were saved as a reproducible project artifact.
+
+Generated artifact:
+
+- results/source_file_distribution.csv
+
+**Status**: Completed.
 
 ### October 3, 2026 — Classical Support Vector Machine Baseline
 
@@ -114,15 +289,15 @@ The planned evaluation will include:
 - recall;
 - F1 score;
 - false-positive rate;
-- Receiver Operating Characteristic Area Under the Curve, where appropriate;
+- ROU-AUC, where appropriate;
 - training time; and
 - inference time.
 
+The model preprocessing workflow will use training-only imputation and feature standardization so that validation and held-out test information does not influence preprocessing statistics.
+
 The resulting performance will form part of the classical reference against which later reduced-sample and quantum-machine-learning experiments may be interpreted.
 
-**Status:** Planned; model training and results pending.
-
----
+**Status**: Data preparation and partitioning completed; Support Vector Machine training is the next active experimental milestone.
 
 ### October 3, 2026 — Random Forest Baseline
 
@@ -130,9 +305,7 @@ Established the Random Forest classifier as the second primary classical baselin
 
 The Random Forest model will use the same training, validation, and held-out test partitions used for the Support Vector Machine so that the two classical models can be compared under consistent experimental conditions.
 
-**Status:** Planned; model training and results pending.
-
----
+**Status**: Planned; model training and results pending.
 
 ### October 3, 2026 — Bounded Quantum-Comparison Dataset Preparation
 
@@ -150,9 +323,7 @@ The final sample size will be determined after classical baseline testing and in
 
 The bounded sampling process will preserve the separation between training, validation, and held-out testing data.
 
-**Status:** Methodology established; bounded sample has not yet been generated.
-
----
+**Status**: Methodology established; bounded sample has not yet been generated.
 
 ### October 3, 2026 — Feature Reduction and Same-Sample Classical Comparison
 
@@ -170,9 +341,7 @@ Feature selection will be fitted using training data only.
 
 Classical models will later be trained on the same bounded observations and reduced feature set intended for quantum evaluation so that the direct classical-versus-quantum comparison is performed under equivalent data conditions.
 
-**Status:** Planned; feature-selection and same-sample comparison experiments pending.
-
----
+**Status**: Planned; feature-selection and same-sample comparison experiments pending.
 
 ### October 3, 2026 — Quantum Experimentation
 
@@ -184,24 +353,39 @@ Initial experiments are expected to use simulation environments before any physi
 
 No quantum experiment or quantum-performance result has been completed or claimed as of October 3, 2026.
 
-**Status:** Future research phase; not yet commenced experimentally.
+**Status**: Future research phase; not yet commenced experimentally.
 
----
+### Current Project Status as of October 3, 2026 
 
-## Current Project Status as of October 3, 2026
+The research project has formally commenced and has progressed beyond repository and methodology setup into active dataset preparation and classical experimental implementation.
 
-The research project has formally commenced.
-
-Completed foundational activities include:
+Completed activities include:
 
 - creation of the GitHub research repository;
 - establishment of the research-project structure;
 - documentation of the selected improved/corrected CIC-IDS2017 dataset;
 - creation of the experimental methodology;
-- establishment of the research-progress log; and
-- definition of the staged experimental sequence.
-- Validated local improved CICIDS2017 files and generated file-level SHA-256 provenance records.
+- establishment of the research-progress log;
+- validation of local improved CIC-IDS2017 files;
+- generation of file-level SHA-256 provenance records;
+- successful loading of five corrected CIC-IDS2017 CSV files;
+- inspection of 2,099,976 raw observations across 93 columns;
+- preservation of original attack labels and attempted-category codes;
+- identification and documented treatment of 11,979 attempted attack flows;
+- creation of the benign-versus-malicious binary classification target;
+- construction of a leakage-aware numeric feature matrix containing 85 candidate features;
+- assessment of missing values;
+- duplicate and conflicting-label analysis;
+- removal of three redundant duplicate observations;
+- establishment of a cleaned dataset containing 2,099,973 observations;
+- source-file and attack-distribution analysis;
+- creation of a reproducible 300,000-observation classical working sample;
+- creation of reproducible 70/15/15 training, validation, and held-out test partitions;
+- verification that class proportions remained stable across partitions; and
+- verification that source-file proportions remained closely aligned across training, validation, and held-out test partitions.
 
-The next implementation milestone is preprocessing of the improved/corrected CIC-IDS2017 dataset, followed by execution of the first classical Support Vector Machine and Random Forest baseline experiments.
+The next active experimental milestone is construction and training of the initial SVM baseline using training-only imputation and feature standardization, followed by validation-set evaluation.
+
+The Random Forest baseline will follow using the same established data partitions.
 
 No quantum-computing experimental result is claimed at this stage.
