@@ -418,7 +418,7 @@ The held-out test partition has not yet been used for model evaluation.
 - results/svm_validation_results.csv
 - results/svm_validation_confusion_matrix.png
 
-**Status:** Initial Linear Support Vector Machine training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
+**Status:** Initial Linear SVM training and validation completed; held-out test evaluation deferred until the classical modeling methodology is finalized.
 
 ### October 3, 2026 - Attack-Family-Level Generalization Analysis
 
@@ -511,6 +511,64 @@ The current Linear SVM and Random Forest results are also not yet the direct lik
 
 **Status:** Initial Random Forest training and validation completed; source-file sensitivity analysis and held-out testing remain pending.
 
+
+### October 4, 2026 - Final Held-Out Classical Baseline Evaluation
+
+Completed the final evaluation of the established Linear Support Vector Machine and Random Forest classical baselines using the previously untouched 45,000-observation held-out test partition.
+
+The models were evaluated without additional retraining, threshold modification, or model tuning following review of the validation-stage results and source-file sensitivity analyses.
+
+#### Linear Support Vector Machine (SVM)
+
+The Linear SVM achieved:
+
+- **Accuracy:** approximately 99.25%;
+- **Precision:** approximately 97.76%;
+- **Recall:** approximately 99.17%;
+- **F1 score:** approximately 98.46%;
+- **False-positive rate:** approximately 0.72%; and
+- **ROC-AUC:** approximately 0.9989.
+
+The held-out test confusion matrix contained:
+
+- **33,924 true negatives;**
+- **246 false positives;**
+- **90 false negatives; and**
+- **10,740 true positives.**
+
+#### Random Forest
+
+The Random Forest achieved:
+
+- **Accuracy:** approximately 99.98%;
+- **Precision:** approximately 99.98%;
+- **Recall:** approximately 99.95%;
+- **F1 score:** approximately 99.97%;
+- **False-positive rate:** approximately 0.01%; and
+- **ROC-AUC:** approximately 1.0000.
+
+The held-out test confusion matrix contained:
+
+- **34,168 true negatives;**
+- **2 false positives;**
+- **5 false negatives; and**
+- **10,825 true positives.**
+
+The final held-out results were closely aligned with the earlier stratified validation results, providing a consistent classical benchmark under the established random-partition methodology.
+
+However, these results are interpreted together with the completed source-file and unseen-attack-family sensitivity analysis. That analysis demonstrated that performance under random stratified partitions does not necessarily translate to equivalent performance when entire source files and associated attack families are absent from training.
+
+Accordingly, the near-perfect Random Forest performance on the random held-out test partition is treated as a benchmark reference rather than evidence of equivalent performance on unseen operational traffic.
+
+The held-out test partition was evaluated only after the classical methodology, model configurations, and diagnostic analyses had been completed. No additional model tuning was performed using the test results.
+
+**Generated artifact:**
+
+- results/classical_baseline_results.csv
+
+**Status:** Initial classical baseline phase completed. 
+
+
 ### October 3, 2026 — Bounded Quantum-Comparison Dataset Preparation
 
 Established the methodology for creating a smaller, reproducible sample for later quantum-machine-learning comparison.
@@ -563,7 +621,7 @@ No quantum experiment or quantum-performance result has been completed or claime
 
 **Status**: Future research phase; not yet commenced experimentally.
 
-Current Project Status as of October 3, 2026
+### Current Project Status as of October 3, 2026
 
 The research project has progressed from repository setup and classical baseline development into active model-validation and generalization analysis.
 
