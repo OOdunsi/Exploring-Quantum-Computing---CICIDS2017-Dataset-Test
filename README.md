@@ -10,7 +10,7 @@ This repository does **not** claim that the full cloud/on-premise or real-time q
 
 ## Dataset choice
 
-Version 2 is designed for the **improved/corrected CICIDS2017 dataset** released by the DistriNet research group after peer-reviewed work identified issues in the original CICIDS2017 data-generation and labeling pipeline.
+This version is designed for the **improved/corrected CICIDS2017 dataset** released by the DistriNet research group after peer-reviewed work identified issues in the original CICIDS2017 data-generation and labeling pipeline.
 
 Recommended source:
 - Dataset documentation: https://intrusion-detection.distrinet-research.be/CNS2022/CICIDS2017.html
@@ -47,18 +47,39 @@ These are starter values, not fixed scientific requirements. The exact quantum s
 ## Repository structure
 
 cicids2017-classical-baseline-v2/
+Exploring-Quantum-Computing---CICIDS2017-Dataset-Test/
+├── .github/
+├── .gitignore
 ├── README.md
 ├── requirements.txt
-├── .gitignore
 ├── data/
 │   └── README.md
 ├── documentation/
-│   └── methodology.md
+│   ├── methodology.md
+│   └── research-log.md
 ├── notebooks/
 │   └── 01_cicids2017_classical_baseline_v2.ipynb
 └── results/
-    └── .gitkeep
-```
+    ├── .gitkeep
+    ├── attempted_flow_treatment_summary.csv
+    ├── classical_baseline_results.csv
+    ├── classical_partition_manifest.csv
+    ├── classical_split_summary.csv
+    ├── classical_starter_sample_manifest.csv
+    ├── classical_validation_comparison.csv
+    ├── dataset_file_provenance.csv
+    ├── excluded_columns_leakage_control.csv
+    ├── heldout_attack_family_overlap_audit.csv
+    ├── malicious_attack_family_by_source.csv
+    ├── random_forest_validation_results.csv
+    ├── rf_source_holdout_score_distribution.csv
+    ├── rf_source_holdout_threshold_diagnostic.csv
+    ├── source_file_distribution.csv
+    ├── source_file_sensitivity_class_audit.csv
+    ├── source_file_sensitivity_results.csv
+    ├── svm_validation_results.csv
+    ├── unseen_attack_family_sensitivity_results.csv
+    └── initial_numeric_feature_list.csv
 
 ## Research-integrity statement
 
