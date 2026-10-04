@@ -9,7 +9,7 @@
 
 I commenced the implementation phase of the proposed research on October 3, 2026, by establishing a version-controlled GitHub research repository for the initial classical machine-learning baseline.
 
-The initial experimental stage uses the improved/corrected CIC-IDS2017 intrusion-detection dataset. This stage is intended to establish reproducible classical reference models before subsequent bounded quantum-machine-learning experiments are attempted.
+The initial experimental stage uses the improved/corrected CICIDS2017 intrusion-detection dataset. This stage is intended to establish reproducible classical reference models before subsequent bounded quantum-machine-learning experiments are attempted.
 
 Initial implementation activities include:
 
