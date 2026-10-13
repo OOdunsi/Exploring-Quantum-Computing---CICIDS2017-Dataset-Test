@@ -10,7 +10,7 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
-
+.venv-braket/
 # Model binaries
 *.joblib
 

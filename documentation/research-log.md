@@ -684,3 +684,30 @@ This future phase is expected to include:
 - subsequent implementation of the planned quantum-kernel experiment in a simulation environment.
 
 No quantum-computing experimental result is claimed as of October 4, 2026.
+
+
+### October 13, 2026 - First Amazon Braket Quantum Circuit Experiment
+
+Following completion of the Amazon Braket Quantum Application Development course and Amazon Braket Knowledge Badge Assessment, I conducted my first introductory quantum computing experiment using the Amazon Braket SDK.
+
+A two-qubit Bell-state quantum circuit was constructed using a Hadamard gate and a Controlled-NOT (CNOT) gate. The circuit was executed using Amazon Braket's local quantum simulator with 1,000 measurement shots.
+
+**Experimental Results:**
+
+- Measurement outcome `00`: 500 observations (50%)
+- Measurement outcome `11`: 500 observations (50%)
+- Measurement outcomes `01` and `10`: 0 observations
+- Total measurements: 1,000
+
+The observed measurement distribution was consistent with the expected theoretical distribution of the Bell state.
+
+The experiment demonstrated successful quantum circuit construction, local simulation, measurement execution, and result extraction using the Amazon Braket SDK.
+
+This introductory exercise establishes practical familiarity with quantum computing tools before implementing bounded quantum machine-learning experiments for cybersecurity threat detection. It does not constitute a completed quantum threat-detection model or demonstrate quantum computational advantage.
+
+**Research Artifacts:**
+
+- `notebooks/02_amazon_braket_bell_state_local.ipynb`
+- `results/02_bell_state_local_results.json`
+
+**Status:** Completed.
