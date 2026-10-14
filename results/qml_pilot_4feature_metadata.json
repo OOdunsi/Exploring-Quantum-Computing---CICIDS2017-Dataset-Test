@@ -1,0 +1,35 @@
+{
+    "experiment": "Four-Feature Quantum ML Pilot",
+    "recorded_utc": "2026-10-14T01:35:59.264259+00:00",
+    "dataset": "Improved CICIDS2017",
+    "original_candidate_features": 82,
+    "selected_features": [
+        "Bwd Packet Length Std",
+        "Bwd Init Win Bytes",
+        "Packet Length Variance",
+        "Packet Length Std"
+    ],
+    "feature_selection": "Mutual information",
+    "feature_selection_partition": "Training only",
+    "quantum_qubits_planned": 4,
+    "training_observations": 100,
+    "validation_observations": 30,
+    "training_class_distribution": {
+        "benign": 50,
+        "malicious": 50
+    },
+    "validation_class_distribution": {
+        "benign": 15,
+        "malicious": 15
+    },
+    "scaling": "MinMaxScaler [0, pi]",
+    "validation_values_clipped": 1,
+    "group_separation": "PASSED",
+    "final_test_used": false,
+    "random_state": 42,
+    "classical_comparator": "RBF SVM",
+    "classical_accuracy": 0.9,
+    "classical_recall": 0.8,
+    "classical_f1": 0.8888888888888888,
+    "research_status": "Classical comparator completed; quantum model not yet executed."
+}

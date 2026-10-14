@@ -1,0 +1,2 @@
+Model,Training_Rows,Validation_Rows,Qubits,Accuracy,Precision,Recall,F1,False_Positive_Rate,ROC_AUC,SVM_Training_Seconds,SVM_Inference_Seconds,Kernel_Preparation_Seconds,TN,FP,FN,TP
+Amazon Braket Quantum Kernel SVM,100,30,4,0.9,1.0,0.8,0.8888888888888888,0.0,0.9511111111111112,0.01582670002244413,0.0003664999967440963,1.5058392999926582,15,0,3,12

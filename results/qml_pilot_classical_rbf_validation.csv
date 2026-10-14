@@ -1,0 +1,2 @@
+Model,Training_Rows,Validation_Rows,Features,Accuracy,Precision,Recall,F1,False_Positive_Rate,ROC_AUC,Training_Seconds,Inference_Seconds,TN,FP,FN,TP
+Classical RBF SVM,100,30,4,0.9,1.0,0.8,0.8888888888888888,0.0,0.9466666666666668,0.004341199994087219,0.0013132999883964658,15,0,3,12

@@ -8,6 +8,43 @@ This repository documents the initial classical-machine-learning phase of the pr
 
 This repository does **not** claim that the full cloud/on-premise or real-time quantum portion of the endeavor has already been implemented. The purpose of this first phase is to create a reproducible classical baseline and a controlled, bounded sample that can later support fair quantum-kernel comparisons.
 
+
+## Research Status Update — October 13, 2026
+
+The research has progressed beyond initial classical baseline development
+to a completed, bounded quantum-kernel machine-learning pilot.
+
+The corrected classical workflow uses 82 numerical traffic features
+after excluding additional identifier and port-related columns.
+Group-aware validation and Tuesday source-file sensitivity testing
+were performed to investigate duplicate-pattern leakage risks and
+generalization to previously unseen attack families.
+
+A four-feature quantum pilot was subsequently implemented using
+100 training and 30 validation observations.
+
+A classical RBF SVM and an Amazon Braket simulator-based quantum-kernel
+SVM achieved identical validation accuracy (90%), recall (80%),
+and F1 score (0.888889).
+
+The quantum model achieved ROC-AUC of 0.951111 compared with
+0.946667 for the classical model, but required substantially more
+recorded processing time.
+
+These results establish implementation feasibility, not quantum
+computational advantage or operational real-time threat detection.
+
+The corrected 82-feature workflow's final held-out test partition
+has not been accessed.
+
+Earlier sections documenting the original 85-feature experiments
+are retained as historical research records.
+
+See documentation/research-log.md for the dated experimental record
+and results/ for supporting evidence.
+
+
+
 ## Dataset choice
 
 This version is designed for the **improved/corrected CICIDS2017 dataset** released by the DistriNet research group after peer-reviewed work identified issues in the original CICIDS2017 data-generation and labeling pipeline.

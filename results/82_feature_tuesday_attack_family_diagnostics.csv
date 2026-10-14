@@ -1,0 +1,5 @@
+Model,Attack_Family,Total_Attacks,Detected,Missed,Recall
+Linear SVM,FTP-Patator,520,1,519,0.0019230769230769232
+Linear SVM,SSH-Patator,366,0,366,0.0
+Random Forest,FTP-Patator,520,0,520,0.0
+Random Forest,SSH-Patator,366,0,366,0.0

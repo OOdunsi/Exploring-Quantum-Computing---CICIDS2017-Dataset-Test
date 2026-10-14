@@ -711,3 +711,70 @@ This introductory exercise establishes practical familiarity with quantum comput
 - `results/02_bell_state_local_results.json`
 
 **Status:** Completed.
+
+
+---
+
+### October 13, 2026 - First Quantum-Kernel Threat-Detection Pilot
+
+Implemented and evaluated an initial four-qubit quantum-kernel
+Support Vector Machine using the improved/corrected CICIDS2017 dataset
+and the Amazon Braket local simulator.
+
+The experiment used a bounded, balanced dataset comprising
+100 training observations and 30 validation observations.
+Four numerical traffic features were selected using training-only
+mutual information. Preprocessing was fitted on training data only,
+and the final held-out test partition was not accessed.
+
+The quantum feature map used RY rotations, a CNOT entangling chain,
+and RZ rotations. An exact state-vector simulator generated the
+quantum representations, and squared state overlaps were used
+to construct training and validation kernel matrices.
+
+A classical RBF SVM was evaluated using the same observations
+and feature representation.
+
+**Validation results:**
+
+| Metric | Classical RBF SVM | Quantum-Kernel SVM |
+|---|---:|---:|
+| Accuracy | 0.900000 | 0.900000 |
+| Precision | 1.000000 | 1.000000 |
+| Recall | 0.800000 | 0.800000 |
+| F1 | 0.888889 | 0.888889 |
+| ROC-AUC | 0.946667 | 0.951111 |
+| False positives | 0 | 0 |
+| False negatives | 3 | 3 |
+
+The recorded execution totals were 0.005654 seconds for the
+classical comparator and 1.522033 seconds for the quantum-kernel
+pipeline. These measurements reflect different implementations
+and are not a standardized hardware benchmark.
+
+**Interpretation:**
+
+Both approaches achieved identical classification performance
+at their evaluated decision thresholds. The quantum kernel produced
+a slightly higher ROC-AUC, but this small pilot does not provide
+sufficient evidence of quantum superiority.
+
+**Limitations:**
+
+The validation dataset was small and deliberately balanced.
+The quantum model was evaluated on a noiseless local simulator,
+not physical quantum hardware. No live network deployment,
+real-time detection, or independent unseen-attack evaluation
+was performed in this pilot.
+
+**Research artifacts:**
+
+- notebooks/03_amazon_braket_quantum_kernel.ipynb
+- results/qml_pilot_classical_rbf_validation.csv
+- results/qml_pilot_quantum_kernel_svm_validation.csv
+- results/qml_pilot_classical_vs_quantum_validation.csv
+- results/qml_pilot_4feature_metadata.json
+- results/qml_pilot_quantum_kernel_metadata.json
+
+**Status:** Initial quantum-kernel classification pilot completed.
+Further robustness and generalization experiments are planned.

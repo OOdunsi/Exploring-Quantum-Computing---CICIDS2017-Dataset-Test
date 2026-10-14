@@ -1,0 +1,16 @@
+{
+    "experiment": "Tuesday Source-File Holdout",
+    "recorded_utc": "2026-10-14T01:24:27.631087+00:00",
+    "dataset": "Improved CICIDS2017",
+    "feature_count": 82,
+    "training_rows": 212610,
+    "evaluation_rows": 39146,
+    "overlap_rows_excluded": 3057,
+    "malicious_evaluation_rows": 886,
+    "attack_families": {
+        "FTP-Patator": 520,
+        "SSH-Patator": 366
+    },
+    "final_test_used": false,
+    "notes": "Both FTP-Patator and SSH-Patator were absent from source-holdout training. Default classification thresholds were not adjusted using holdout results."
+}

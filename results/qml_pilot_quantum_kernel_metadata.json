@@ -1,0 +1,43 @@
+{
+    "experiment": "CICIDS2017 Quantum Kernel SVM Pilot",
+    "recorded_utc": "2026-10-14T01:56:50.522301+00:00",
+    "dataset": "Improved CICIDS2017",
+    "dataset_sha256": "a89b277b21190c5310b484bd1839db2f2a19ac9fd536982cda67fa50e925c8ba",
+    "training_rows": 100,
+    "validation_rows": 30,
+    "selected_features": [
+        "Bwd Packet Length Std",
+        "Bwd Init Win Bytes",
+        "Packet Length Variance",
+        "Packet Length Std"
+    ],
+    "qubits": 4,
+    "simulator": "Amazon Braket LocalSimulator",
+    "simulation_type": "Exact state vector",
+    "shots": 0,
+    "feature_map": "RY encoding, CNOT chain, RZ encoding",
+    "quantum_kernel": "Squared quantum state overlap",
+    "classical_model": "RBF SVM",
+    "quantum_model": "Precomputed-kernel SVM",
+    "svm_C": 1.0,
+    "class_weight": "balanced",
+    "classical_gamma": "scale",
+    "validation_class_distribution": {
+        "benign": 15,
+        "malicious": 15
+    },
+    "classical_recorded_seconds": 0.0056544999824836,
+    "quantum_recorded_seconds": 1.5220325000118464,
+    "quantum_kernel_min_eigenvalue": -5.256694398109772e-15,
+    "braket_sdk_version": "1.127.3.post0",
+    "numpy_version": "2.5.4",
+    "scikit_learn_version": "1.9.1",
+    "final_test_used": false,
+    "limitations": [
+        "Small balanced validation sample",
+        "No quantum hardware execution",
+        "No demonstrated quantum advantage",
+        "No independent unseen-attack evaluation",
+        "Runtime implementations differ"
+    ]
+}
